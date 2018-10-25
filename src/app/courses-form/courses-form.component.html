@@ -1,0 +1,37 @@
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <!-- Course name input minimum 5 characters and required -->
+  <div class="form-group">
+    <label for="courseName">Course name</label>
+    <input ngModel minlength="5" required name="courseName" id="courseName" #courseName="ngModel" type="text" class="form-control">
+    <div *ngIf="courseName.touched && !courseName.valid" class="alert alert-danger">
+      <div *ngIf="courseName.errors.minlength">Minimum length is 5 characters.</div>
+      <div *ngIf="courseName.errors.required">Course name is requried.</div>
+    </div>
+  </div>
+
+  <!-- Category dropdown with 3 categories required -->
+  <div class="form-group">
+    <label for="categoryOptions">Categories</label>
+    <select required ngModel name="categoryOptions" id="categoryOptions" #options="ngModel" class="form-control">
+      <option></option>
+      <option *ngFor="let option of categoryOptions" [value]="option.id">{{option.name}}</option>
+    </select>
+    <div *ngIf="options.touched && !options.valid" class="alert alert-danger">
+      <div *ngIf="options.errors.required">Please select a category.</div>
+    </div>
+  </div>
+
+  <!-- 30 day money back guarantee checkbox -->
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ngModel name="moneyBack">30-day money-back guarantee
+    </label>
+  </div>
+
+  <button [disabled]="!form.valid" class="btn btn-primary">Submit</button>
+
+  <!-- json test object -->
+  <p>
+    {{form.value | json}}
+  </p>
+</form>
